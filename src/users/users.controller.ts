@@ -17,10 +17,11 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get(':run')
+  findOne(@Param('run') run: string) {
+    return this.usersService.findByRun(+run);
   }
+  
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
