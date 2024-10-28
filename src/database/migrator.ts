@@ -4,7 +4,7 @@ async function makeMigration() {
   const args = process.argv.slice(2);
 
   const migrationsPath = './migrations';
-  const migrationName = args[0].replace(' ', '_');
+  const migrationName = args[0].replaceAll(' ', '_');
   const now = Date.now();
 
   await writeFile(
