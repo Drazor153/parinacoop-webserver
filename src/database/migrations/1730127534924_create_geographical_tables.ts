@@ -5,16 +5,16 @@ export async function up(db: Kysely<any>): Promise<void> {
     .createTable('region')
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('name', 'varchar', (col) => col.notNull())
-    .addColumn('romanNumber', 'varchar', (col) => col.notNull())
+    .addColumn('roman_number', 'varchar', (col) => col.notNull())
     .addColumn('number', 'smallint', (col) => col.notNull())
     .addColumn('abbreviation', 'varchar', (col) => col.notNull())
     .execute();
 
   await db.schema
     .createTable('commune')
-    .addColumn('id', 'varchar', (col) => col.primaryKey())
+    .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('name', 'varchar', (col) => col.notNull())
-    .addColumn('postalCode', 'integer', (col) => col.notNull())
+    .addColumn('postal_code', 'integer', (col) => col.notNull())
     .addColumn('region_id', 'integer', (col) =>
       col.references('region.id').onDelete('cascade').notNull(),
     )
