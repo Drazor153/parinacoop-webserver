@@ -3,7 +3,8 @@ import { Insertable, Selectable, Updateable } from 'kysely';
 export interface CommuneTable {
   id: number;
   name: string;
-  region_id: string;
+  postal_code: number;
+  region_id: number;
 }
 
 export type Commune = Selectable<CommuneTable>;

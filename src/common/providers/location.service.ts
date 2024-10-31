@@ -1,9 +1,10 @@
-import { Region, regions_communes } from '@/utils/consts/regions';
 import { Injectable } from '@nestjs/common';
+
+import { Region, regions_communes } from '@/utils/consts/regions';
 
 @Injectable()
 export class LocationService {
-  public getRegionsCommunes(): Region[] {
+  public async getRegionsCommunes(): Promise<Region[]> {
     return regions_communes;
   }
 }
