@@ -1,9 +1,11 @@
-import { Insertable, Selectable, Updateable } from 'kysely';
+import { Generated, Insertable, Selectable, Updateable } from 'kysely';
 
 export interface RegionTable {
-  id: string;
+  id: Generated<number>;
   name: string;
-  abbr: string;
+  roman_number: string;
+  number: number;
+  abbreviation: string;
 }
 
 export type Region = Selectable<RegionTable>;

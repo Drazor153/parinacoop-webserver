@@ -3,7 +3,9 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from './interfaces/environmentVariables';
 import { DatabaseModule } from './database/database.module';
-import { RegionsModule } from './regions/regions.module';
+import { LocationModule } from './location/location.module';
+import { CommonModule } from './common/common.module';
+import { SampleModule } from './sample/sample.module';
 
 @Module({
   imports: [
@@ -20,9 +22,8 @@ import { RegionsModule } from './regions/regions.module';
       }),
     }),
     UsersModule,
-    RegionsModule,
+    LocationModule,
+    CommonModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
