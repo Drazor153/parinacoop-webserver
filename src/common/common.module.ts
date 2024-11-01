@@ -1,9 +1,9 @@
 import { Global, Module } from '@nestjs/common';
-import { LocationService } from './providers';
+import { LocationService, HashingService } from './providers';
 
 @Global()
 @Module({
-  providers: [LocationService],
-  exports: [LocationService],
+  providers: [LocationService, HashingService],
+  exports: [LocationService, HashingService],
 })
 export class CommonModule {}
