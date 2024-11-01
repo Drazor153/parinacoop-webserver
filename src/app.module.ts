@@ -5,7 +5,7 @@ import { EnvironmentVariables } from './interfaces/environmentVariables';
 import { DatabaseModule } from './database/database.module';
 import { LocationModule } from './location/location.module';
 import { CommonModule } from './common/common.module';
-import { AuthModule } from './auth/auth.module';
+import { SampleModule } from './sample/sample.module';
 
 @Module({
   imports: [
@@ -24,7 +24,6 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     LocationModule,
     CommonModule,
-    AuthModule,
   ],
 })
 export class AppModule {}
