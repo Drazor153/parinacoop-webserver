@@ -19,7 +19,7 @@ export class RegionsController {
   ) {}
 
   @Post()
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   async initializeRegions(): Promise<string> {
     const regions = await this.regionsService.findAll();
     if (regions.length > 0) {
