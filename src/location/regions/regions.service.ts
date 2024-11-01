@@ -8,11 +8,13 @@ import { CreateRegionDTO } from './dto/create-region.dto';
 export class RegionsService {
   constructor(private readonly regionRepository: RegionRepository) {}
 
-  public async create(createRegionDto: CreateRegionDTO): Promise<PrimitiveRegion> {
+  public async create(
+    createRegionDto: CreateRegionDTO,
+  ): Promise<PrimitiveRegion> {
     const newRegion = Region.create(createRegionDto);
-    
+
     await this.regionRepository.create(newRegion);
-    
+
     return newRegion.toValue();
   }
 

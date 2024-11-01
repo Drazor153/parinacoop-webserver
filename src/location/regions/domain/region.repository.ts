@@ -1,6 +1,6 @@
-import { Region } from "./region";
+import { Region } from './region';
 
-export abstract class RegionRepository{
-    abstract create(region: Region): Promise<void>;
-    abstract findAll(): Promise<Region[]>;
+export abstract class RegionRepository {
+  abstract create(region: Region): Promise<void>;
+  abstract findAll(): Promise<Region[]>;
 }

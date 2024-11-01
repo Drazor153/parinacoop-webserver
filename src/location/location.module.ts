@@ -3,6 +3,6 @@ import { RegionsModule } from './regions/regions.module';
 import { CommunesModule } from './communes/communes.module';
 
 @Module({
-    imports: [RegionsModule, CommunesModule]
+  imports: [RegionsModule, CommunesModule],
 })
 export class LocationModule {}
