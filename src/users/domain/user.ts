@@ -2,6 +2,7 @@ import { RolesEnum } from '@/roles/roles.enum';
 
 export interface PrimitiveUser {
   run: number;
+  documentNumber: number;
   email: string;
   names: string;
   firstLastname: string;
@@ -17,12 +18,14 @@ export class User {
 
   static create(createUser: {
     run: number;
+    documentNumber: number;
     email: string;
     password: string;
     role: RolesEnum;
   }): User {
     return new User({
       run: createUser.run,
+      documentNumber: createUser.documentNumber,
       email: createUser.email,
       names: '',
       firstLastname: '',

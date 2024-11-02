@@ -6,12 +6,12 @@ import {
 
 import { NullableType } from '@/utils/types/nullable.type';
 import { HashingService } from '@/common/providers';
+import { RolesEnum } from '@/roles/roles.enum';
 
 import { PrimitiveUser, User } from './domain/user';
 import { UserRepository } from './domain/user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { RolesEnum } from '@/roles/roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -21,35 +21,50 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<{ user: PrimitiveUser }> {
-    const existingUser = await this.findByRun(createUserDto.run);
-    if (existingUser) {
-      throw new UnprocessableEntityException({
-        statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        errors: {
-          run: `User with run ${createUserDto.run} already exists`,
-        },
-      });
-    }
-
-    const existingEmail = await this.findByEmail(createUserDto.email);
-    if (existingEmail) {
-      throw new UnprocessableEntityException({
-        statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        errors: {
-          email: `User with email ${createUserDto.email} already exists`,
-        },
-      });
-    }
-
     const newUser = User.create({
       run: createUserDto.run,
+      documentNumber: createUserDto.documentNumber,
       email: createUserDto.email,
       password: await this.hashingService.hash(createUserDto.password),
       role: RolesEnum.User,
     });
-    await this.userRepository.create(newUser);
 
-    return { user: newUser.toValue() };
+    try {
+      await this.userRepository.create(newUser);
+      return { user: newUser.toValue() };
+    } catch (error) {
+      const valueObject = newUser.toValue();
+      const errors: {
+        run?: string;
+        email?: string;
+        documentNumber?: string;
+        cellphone?: string;
+        other?: string;
+      } = {};
+
+      switch (error.constraint) {
+        case 'user_pkey':
+          errors.run = `User with run ${valueObject.run} already exists`;
+          break;
+        case 'user_email_key':
+          errors.email = `User with email ${valueObject.email} already exists`;
+          break;
+        case 'user_document_number_key':
+          errors.documentNumber = `User with document number ${valueObject.documentNumber} already exists`;
+          break;
+        case 'user_cellphone_key':
+          errors.cellphone = `User with cellphone ${valueObject.cellphone} already exists`;
+          break;
+        default:
+          errors.other = error.detail;
+          break;
+      }
+
+      throw new UnprocessableEntityException({
+        statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        errors,
+      });
+    }
   }
 
   async findByRun(run: number): Promise<{ user: NullableType<PrimitiveUser> }> {

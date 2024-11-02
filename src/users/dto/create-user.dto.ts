@@ -11,13 +11,17 @@ export class CreateUserDto {
   @IsNotEmpty()
   run: number;
 
-  @IsString()
+  @IsInt()
+  @IsNotEmpty()
+  documentNumber: number;
+
   @IsEmail()
+  @IsString()
   @IsNotEmpty()
   email: string;
 
+  @MinLength(8)
   @IsString()
   @IsNotEmpty()
-  @MinLength(8)
   password: string;
 }

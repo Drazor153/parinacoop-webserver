@@ -3,6 +3,7 @@ import { Insertable, Selectable, Updateable } from 'kysely';
 
 export interface UserTable {
   run: number;
+  document_number: number;
   email: string;
   names: string;
   first_lastname: string;
