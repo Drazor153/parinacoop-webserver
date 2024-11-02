@@ -6,9 +6,9 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('type_address', 'varchar', (col) => col.notNull())
     .addColumn('street', 'varchar', (col) => col.notNull())
-    .addColumn('number', 'integer', (col) => col.notNull())
+    .addColumn('number', 'smallint', (col) => col.notNull())
     .addColumn('detail', 'varchar')
-    .addColumn('commune_id', 'integer', (col) =>
+    .addColumn('commune_id', 'smallint', (col) =>
       col.references('commune.id').onDelete('set null'),
     )
     .addColumn('user_run', 'integer', (col) =>

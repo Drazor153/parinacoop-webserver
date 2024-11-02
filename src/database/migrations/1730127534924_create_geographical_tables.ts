@@ -15,7 +15,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('name', 'varchar', (col) => col.notNull())
     .addColumn('postal_code', 'integer', (col) => col.notNull())
-    .addColumn('region_id', 'integer', (col) =>
+    .addColumn('region_id', 'smallint', (col) =>
       col.references('region.id').onDelete('cascade').notNull(),
     )
     .execute();
