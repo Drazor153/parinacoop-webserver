@@ -6,6 +6,8 @@ import { UsersService } from '@/users/users.service';
 
 import { LoginDto } from './dto/login.dto';
 import { LoginResponse } from './interfaces/login-response';
+import { RegisterDto } from './dto/register.dto';
+import { RegisterResponse } from './interfaces/register-response';
 
 @Injectable()
 export class AuthService {
@@ -36,6 +38,13 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
       message: 'Authenticated',
+    };
+  }
+
+  async register(registerDto: RegisterDto): Promise<RegisterResponse> {
+    await this.usersService.create(registerDto);
+    return {
+      message: 'User created',
     };
   }
 }
