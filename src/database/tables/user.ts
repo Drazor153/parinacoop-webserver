@@ -1,3 +1,4 @@
+import { RolesEnum } from '@/roles/roles.enum';
 import { Insertable, Selectable, Updateable } from 'kysely';
 
 export interface UserTable {
@@ -9,6 +10,7 @@ export interface UserTable {
   cellphone: number;
   password: string;
   password_attempts: number;
+  role: RolesEnum;
   created_at: number;
   updated_at: number;
 }

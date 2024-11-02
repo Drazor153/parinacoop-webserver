@@ -39,6 +39,7 @@ export class UserPostgresRepository implements UserRepository {
           cellphone: result.cellphone,
           password: result.password,
           passwordAttempts: result.password_attempts,
+          role: result.role,
         })
       : null;
   }
@@ -59,6 +60,7 @@ export class UserPostgresRepository implements UserRepository {
           cellphone: result.cellphone,
           password: result.password,
           passwordAttempts: result.password_attempts,
+          role: result.role,
         })
       : null;
   }

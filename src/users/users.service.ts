@@ -11,6 +11,7 @@ import { PrimitiveUser, User } from './domain/user';
 import { UserRepository } from './domain/user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RolesEnum } from '@/roles/roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +20,7 @@ export class UsersService {
     private readonly hashingService: HashingService,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<PrimitiveUser> {
+  async create(createUserDto: CreateUserDto): Promise<{ user: PrimitiveUser }> {
     const existingUser = await this.findByRun(createUserDto.run);
     if (existingUser) {
       throw new UnprocessableEntityException({
@@ -44,20 +45,23 @@ export class UsersService {
       run: createUserDto.run,
       email: createUserDto.email,
       password: await this.hashingService.hash(createUserDto.password),
+      role: RolesEnum.User,
     });
     await this.userRepository.create(newUser);
 
-    return newUser.toValue();
+    return { user: newUser.toValue() };
   }
 
-  async findByRun(run: number): Promise<NullableType<PrimitiveUser>> {
+  async findByRun(run: number): Promise<{ user: NullableType<PrimitiveUser> }> {
     const result = await this.userRepository.findByRun(run);
-    return result?.toValue();
+    return { user: result?.toValue() ?? null };
   }
 
-  async findByEmail(email: string): Promise<NullableType<PrimitiveUser>> {
+  async findByEmail(
+    email: string,
+  ): Promise<{ user: NullableType<PrimitiveUser> }> {
     const result = await this.userRepository.findByEmail(email);
-    return result?.toValue();
+    return { user: result?.toValue() ?? null };
   }
 
   update(run: number, updateUserDto: UpdateUserDto) {

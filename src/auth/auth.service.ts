@@ -16,10 +16,12 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {
-    const user = await this.usersService.findByRun(loginDto.run);
-    if (!user) {
+    const resultSameRun = await this.usersService.findByRun(loginDto.run);
+    if (!resultSameRun) {
       throw new UnauthorizedException('Credentials are incorrect');
     }
+    const { user } = resultSameRun;
+
     const isPasswordValid = await this.hashingService.compare(
       loginDto.password,
       user.password,

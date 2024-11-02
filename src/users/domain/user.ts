@@ -1,3 +1,5 @@
+import { RolesEnum } from '@/roles/roles.enum';
+
 export interface PrimitiveUser {
   run: number;
   email: string;
@@ -7,6 +9,7 @@ export interface PrimitiveUser {
   cellphone: number;
   password: string;
   passwordAttempts: number;
+  role: RolesEnum;
 }
 
 export class User {
@@ -16,6 +19,7 @@ export class User {
     run: number;
     email: string;
     password: string;
+    role: RolesEnum;
   }): User {
     return new User({
       run: createUser.run,
@@ -26,6 +30,7 @@ export class User {
       cellphone: 0,
       password: createUser.password,
       passwordAttempts: 0,
+      role: createUser.role,
     });
   }
 
