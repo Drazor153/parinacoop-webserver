@@ -4,6 +4,7 @@ import {
   Post,
   HttpStatus,
   HttpCode,
+  Get,
 } from '@nestjs/common';
 import { LocationService } from '@/common/providers';
 
@@ -17,6 +18,11 @@ export class RegionsController {
     private readonly locationService: LocationService,
     private readonly communesService: CommunesService,
   ) {}
+
+  @Get()
+  findAll() {
+    return this.regionsService.findAll();
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
