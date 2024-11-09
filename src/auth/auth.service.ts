@@ -19,7 +19,8 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {
     const resultSameRun = await this.usersService.findByRun(loginDto.run);
-    if (!resultSameRun) {
+
+    if (!resultSameRun.user) {
       throw new UnauthorizedException('Credentials are incorrect');
     }
     const { user } = resultSameRun;

@@ -13,7 +13,10 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+  app.enableCors({ origin: ['http://localhost:4200'] });
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
+
   const configService = app.get(ConfigService);
   const port = +configService.get('PORT') || 3000;
 
