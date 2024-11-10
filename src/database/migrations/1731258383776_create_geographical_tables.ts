@@ -1,6 +1,6 @@
-import { Kysely } from 'kysely';
+import { Migration } from 'kysely';
 
-export async function up(db: Kysely<any>): Promise<void> {
+export const up: Migration['up'] = async (db) => {
   await db.schema
     .createTable('region')
     .addColumn('id', 'serial', (col) => col.primaryKey())
@@ -19,9 +19,9 @@ export async function up(db: Kysely<any>): Promise<void> {
       col.references('region.id').onDelete('cascade').notNull(),
     )
     .execute();
-}
+};
 
-export async function down(db: Kysely<any>): Promise<void> {
+export const down: Migration['down'] = async (db) => {
   await db.schema.dropTable('region').execute();
   await db.schema.dropTable('commune').execute();
-}
+};

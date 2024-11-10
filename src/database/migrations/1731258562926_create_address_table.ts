@@ -1,6 +1,6 @@
-import { Kysely } from 'kysely';
+import { Migration, sql } from 'kysely';
 
-export async function up(db: Kysely<any>): Promise<void> {
+export const up: Migration['up'] = async (db) => {
   await db.schema
     .createTable('address')
     .addColumn('id', 'serial', (col) => col.primaryKey())
@@ -12,11 +12,11 @@ export async function up(db: Kysely<any>): Promise<void> {
       col.references('commune.id').onDelete('set null'),
     )
     .addColumn('user_run', 'integer', (col) =>
-      col.references('user.run').onDelete('cascade').notNull(),
+      col.references('user.run').onDelete('cascade').unique().notNull(),
     )
     .execute();
-}
+};
 
-export async function down(db: Kysely<any>): Promise<void> {
-  await db.schema.dropTable('address');
-}
+export const down: Migration['down'] = async (db) => {
+  await db.schema.dropTable('address').execute();
+};
