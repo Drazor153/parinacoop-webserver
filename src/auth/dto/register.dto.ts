@@ -11,6 +11,11 @@ export class RegisterDto {
   @IsNotEmpty()
   run: number;
 
+  @MinLength(8)
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
   @IsInt()
   @IsNotEmpty()
   documentNumber: number;
@@ -20,8 +25,7 @@ export class RegisterDto {
   @IsNotEmpty()
   email: string;
 
-  @MinLength(8)
   @IsString()
   @IsNotEmpty()
-  password: string;
+  cellphone: string;
 }

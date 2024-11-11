@@ -1,43 +1,42 @@
 import { RolesEnum } from '@/roles/roles.enum';
+import { Profile } from './profile';
 
-export interface PrimitiveUser {
+interface UserModelData {
   run: number;
-  documentNumber: number;
-  email: string;
-  names: string;
-  firstLastname: string;
-  secondLastname: string;
-  cellphone: number;
-  password: string;
-  passwordAttempts: number;
   role: RolesEnum;
+  password: string;
+  profile_id?: number;
+  email?: string;
+  document_number?: number;
+  cellphone?: string;
 }
 
 export class User {
-  constructor(private attributes: PrimitiveUser) {}
+  run: number;
+  role: RolesEnum;
+  password: string;
+  profile?: Profile;
 
-  static create(createUser: {
-    run: number;
-    documentNumber: number;
-    email: string;
-    password: string;
-    role: RolesEnum;
-  }): User {
-    return new User({
-      run: createUser.run,
-      documentNumber: createUser.documentNumber,
-      email: createUser.email,
-      names: '',
-      firstLastname: '',
-      secondLastname: '',
-      cellphone: 0,
-      password: createUser.password,
-      passwordAttempts: 0,
-      role: createUser.role,
-    });
-  }
+  constructor({
+    run,
+    role,
+    password,
+    profile_id,
+    email,
+    document_number,
+    cellphone,
+  }: UserModelData) {
+    this.run = run;
+    this.role = role;
+    this.password = password;
 
-  toValue(): PrimitiveUser {
-    return this.attributes;
+    if (profile_id) {
+      this.profile = new Profile({
+        id: profile_id,
+        email,
+        documentNumber: document_number,
+        cellphone,
+      });
+    }
   }
 }

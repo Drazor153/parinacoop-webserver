@@ -9,7 +9,7 @@ export const up: Migration['up'] = async (db) => {
     )
     .addColumn('document_number', 'integer', (col) => col.notNull().unique())
     .addColumn('email', 'varchar', (col) => col.notNull().unique())
-    .addColumn('cellphone', 'integer', (col) => col.notNull())
+    .addColumn('cellphone', 'varchar', (col) => col.notNull())
     .addColumn('names', 'varchar')
     .addColumn('first_lastname', 'varchar')
     .addColumn('second_lastname', 'varchar')

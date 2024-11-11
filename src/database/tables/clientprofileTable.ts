@@ -8,7 +8,7 @@ export interface ClientProfileTable {
   names: string;
   first_lastname: string;
   second_lastname: string;
-  cellphone: number;
+  cellphone: string;
   created_at: number;
   updated_at: number;
 }

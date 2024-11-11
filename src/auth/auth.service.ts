@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { HashingService } from '@/common/providers';
@@ -18,12 +23,11 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {
-    const resultSameRun = await this.usersService.findByRun(loginDto.run);
+    const user = await this.usersService.findByRun(loginDto.run);
 
-    if (!resultSameRun.user) {
+    if (!user) {
       throw new UnauthorizedException('Credentials are incorrect');
     }
-    const { user } = resultSameRun;
 
     const isPasswordValid = await this.hashingService.compare(
       loginDto.password,
@@ -43,7 +47,35 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto): Promise<RegisterResponse> {
-    await this.usersService.create(registerDto);
+    const errors: {
+      run?: string;
+      email?: string;
+      documentNumber?: string;
+    } = {};
+    const userExists = await this.usersService.existsByRun(registerDto.run);
+    if (userExists) {
+      errors.run = 'Run already exists';
+    }
+    const emailExists = await this.usersService.existsByEmail(
+      registerDto.email,
+    );
+    if (emailExists) {
+      errors.email = 'Email already exists';
+    }
+    const documentNumberExists = await this.usersService.existsByDocumentNumber(
+      registerDto.documentNumber,
+    );
+    if (documentNumberExists) {
+      errors.documentNumber = 'Document number already exists';
+    }
+    if (Object.keys(errors).length) {
+      throw new UnprocessableEntityException(errors);
+    }
+
+    await this.usersService.create({
+      ...registerDto,
+      password: await this.hashingService.hash(registerDto.password),
+    });
     return {
       message: 'User created',
     };
