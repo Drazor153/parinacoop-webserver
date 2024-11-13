@@ -12,7 +12,6 @@ export class UsersController {
 
   @Get('profile')
   getProfile(@User() user: UserRequest) {
-    
     return this.usersService.findByRun(user.run);
   }
 }
