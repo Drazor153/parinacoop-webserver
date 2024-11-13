@@ -14,6 +14,7 @@ import { EnvironmentVariables } from '@/interfaces/environmentVariables';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      global: true,
       useFactory: (configService: ConfigService<EnvironmentVariables>) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') },

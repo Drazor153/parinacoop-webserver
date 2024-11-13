@@ -26,7 +26,7 @@ export class AuthService {
     const user = await this.usersService.findByRun(loginDto.run);
 
     if (!user) {
-      throw new UnauthorizedException('Credentials are incorrect');
+      throw new UnauthorizedException('Las credenciales no son correctas.');
     }
 
     const isPasswordValid = await this.hashingService.compare(
@@ -35,14 +35,13 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Credentials are incorrect');
+      throw new UnauthorizedException('Las credenciales no son correctas.');
     }
 
-    const payload = { run: user.run };
+    const payload = { run: user.run, role: user.role };
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
-      message: 'Authenticated',
+      accessToken: await this.jwtService.signAsync(payload),
     };
   }
 
