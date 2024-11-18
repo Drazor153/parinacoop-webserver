@@ -5,11 +5,12 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { IsValidRun } from '../validators/rut.validator';
 
 export class RegisterDto {
-  @IsInt()
+  @IsValidRun()
   @IsNotEmpty()
-  run: number;
+  run: string;
 
   @MinLength(8)
   @IsString()
