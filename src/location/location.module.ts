@@ -1,8 +1,18 @@
 import { Module } from '@nestjs/common';
-import { RegionsModule } from './regions/regions.module';
-import { CommunesModule } from './communes/communes.module';
+
+import { LocationController } from './location.controller';
+import { LocationService } from './location.service';
+import { RegionRepository } from './domain/region.repository';
+import { RegionPostgresRepository } from './persistence/region.repository';
 
 @Module({
-  imports: [RegionsModule, CommunesModule],
+  controllers: [LocationController],
+  providers: [
+    LocationService,
+    {
+      provide: RegionRepository,
+      useClass: RegionPostgresRepository,
+    },
+  ],
 })
 export class LocationModule {}
