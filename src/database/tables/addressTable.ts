@@ -7,5 +7,5 @@ export interface AddressTable {
   type_address: string;
   street: string;
   number: number;
-  details: string;
+  detail: string;
 }

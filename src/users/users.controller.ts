@@ -1,8 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
   ParseIntPipe,
+  Post,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -15,9 +17,10 @@ import { Role } from '@/roles/roles.enum';
 import { RolesGuard } from '@/roles/roles.guard';
 
 import { UsersService } from './users.service';
+import { CreateClientDto } from './dto/create-client.dto';
 
 @Controller('users')
-@UseGuards(AuthGuard, RolesGuard)
+// @UseGuards(AuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -33,5 +36,11 @@ export class UsersController {
       );
     }
     return this.usersService.findByRun(user.run);
+  }
+
+  @Post()
+  // @Roles(Role.ADMIN)
+  createClient(@Body() createClientDto: CreateClientDto) {
+    return this.usersService.createClient(createClientDto);
   }
 }

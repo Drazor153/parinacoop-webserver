@@ -11,8 +11,8 @@ export const up: Migration['up'] = async (db) => {
     .addColumn('email', 'varchar', (col) => col.notNull().unique())
     .addColumn('cellphone', 'varchar', (col) => col.notNull())
     .addColumn('names', 'varchar')
-    .addColumn('first_lastname', 'varchar')
-    .addColumn('second_lastname', 'varchar')
+    .addColumn('first_last_name', 'varchar')
+    .addColumn('second_last_name', 'varchar')
     .addColumn('created_at', 'timestamp', (col) =>
       col.defaultTo(sql`now()`).notNull(),
     )

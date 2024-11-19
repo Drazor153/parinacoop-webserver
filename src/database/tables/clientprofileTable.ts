@@ -6,8 +6,8 @@ export interface ClientProfileTable {
   document_number: number;
   email: string;
   names: string;
-  first_lastname: string;
-  second_lastname: string;
+  first_last_name: string;
+  second_last_name: string;
   cellphone: string;
   created_at: number;
   updated_at: number;

@@ -4,7 +4,4 @@ import { User } from './user';
 export abstract class UserRepository {
   abstract create(user: User): Promise<User>;
   abstract findByRun(run: number): Promise<NullableType<User>>;
-  abstract existsByRun(run: number): Promise<boolean>;
-  abstract existsByEmail(email: string): Promise<boolean>;
-  abstract existsByDocumentNumber(documentNumber: number): Promise<boolean>;
 }

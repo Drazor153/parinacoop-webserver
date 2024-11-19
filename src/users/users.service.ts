@@ -1,44 +1,50 @@
 import { Injectable } from '@nestjs/common';
+import { deconstructRut } from '@fdograph/rut-utilities';
 
 import { NullableType } from '@/utils/types/nullable.type';
-import { Role } from '@/roles/roles.enum';
 
 import { User } from './domain/user';
 import { UserRepository } from './domain/user.repository';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateClientDto } from './dto/create-client.dto';
+import { Role } from '@/roles/roles.enum';
+import { HashingService } from '@/common/providers';
+import { Address } from './domain/address';
+import { Profile } from './domain/profile';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly hashingService: HashingService,
+  ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    return await this.userRepository.create(
+  async createClient(createClientDto: CreateClientDto): Promise<User> {
+    const { digits } = deconstructRut(createClientDto.run);
+    return this.userRepository.create(
       new User({
-        run: createUserDto.run,
-        document_number: createUserDto.documentNumber,
-        email: createUserDto.email,
-        profile_id: -1,
-        password: createUserDto.password,
+        run: +digits,
         role: Role.CLIENT,
-        cellphone: createUserDto.cellphone,
+        password: await this.hashingService.hash(createClientDto.password),
+        address: new Address({
+          typeAddress: createClientDto.typeAddress,
+          street: createClientDto.street,
+          number: createClientDto.number,
+          detail: createClientDto.detail,
+          communeId: createClientDto.communeId,
+        }),
+        profile: new Profile({
+          names: createClientDto.names,
+          firstLastName: createClientDto.firstLastName,
+          secondLastName: createClientDto.secondLastName,
+          email: createClientDto.email,
+          cellphone: createClientDto.cellphone,
+          documentNumber: createClientDto.documentNumber,
+        }),
       }),
     );
   }
 
   async findByRun(run: number): Promise<NullableType<User>> {
     return await this.userRepository.findByRun(run);
-  }
-
-  async existsByRun(run: number): Promise<boolean> {
-    return await this.userRepository.existsByRun(run);
-  }
-
-  async existsByEmail(email: string): Promise<boolean> {
-    return await this.userRepository.existsByEmail(email);
-  }
-
-  async existsByDocumentNumber(documentNumber: number): Promise<boolean> {
-    return await this.userRepository.existsByDocumentNumber(documentNumber);
   }
 }

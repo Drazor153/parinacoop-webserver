@@ -5,9 +5,10 @@ import {
   NestFastifyApplication,
   FastifyAdapter,
 } from '@nestjs/platform-fastify';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from '@fastify/helmet';
 
 import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -17,6 +18,8 @@ async function bootstrap() {
   app.enableCors({ origin: ['http://localhost:4200'] });
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
+
+  await app.register(helmet);
 
   const config = new DocumentBuilder()
     .setTitle('Parinacoop WebServer')

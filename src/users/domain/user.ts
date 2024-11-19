@@ -1,42 +1,35 @@
 import { Role } from '@/roles/roles.enum';
 import { Profile } from './profile';
+import { Address } from './address';
 
-interface UserModelData {
+export interface PrimitiveUser {
   run: number;
   role: Role;
-  password: string;
-  profile_id?: number;
-  email?: string;
-  document_number?: number;
-  cellphone?: string;
+  password?: string;
+  profile?: Profile;
+  address?: Address;
 }
 
 export class User {
-  run: number;
-  role: Role;
-  password: string;
-  profile?: Profile;
+  constructor(private attributes: PrimitiveUser) {}
 
-  constructor({
-    run,
-    role,
-    password,
-    profile_id,
-    email,
-    document_number,
-    cellphone,
-  }: UserModelData) {
-    this.run = run;
-    this.role = role;
-    this.password = password;
+  toDomain() {
+    return {
+      run: this.attributes.run,
+      role: this.attributes.role,
+      password: this.attributes.password,
+      profile: this.attributes.profile?.toDomain(),
+      address: this.attributes.address?.toDomain(),
+    };
+  }
 
-    if (profile_id) {
-      this.profile = new Profile({
-        id: profile_id,
-        email,
-        documentNumber: document_number,
-        cellphone,
-      });
-    }
+  toPersistence() {
+    return {
+      run: this.attributes.run,
+      role: this.attributes.role,
+      password: this.attributes.password,
+      profile: this.attributes.profile?.toPersistence(),
+      address: this.attributes.address?.toPersistence(),
+    };
   }
 }
