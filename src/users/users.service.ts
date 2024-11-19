@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { NullableType } from '@/utils/types/nullable.type';
-import { RolesEnum } from '@/roles/roles.enum';
+import { Role } from '@/roles/roles.enum';
 
 import { User } from './domain/user';
 import { UserRepository } from './domain/user.repository';
@@ -20,7 +20,7 @@ export class UsersService {
         email: createUserDto.email,
         profile_id: -1,
         password: createUserDto.password,
-        role: RolesEnum.Client,
+        role: Role.CLIENT,
         cellphone: createUserDto.cellphone,
       }),
     );

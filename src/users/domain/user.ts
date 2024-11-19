@@ -1,9 +1,9 @@
-import { RolesEnum } from '@/roles/roles.enum';
+import { Role } from '@/roles/roles.enum';
 import { Profile } from './profile';
 
 interface UserModelData {
   run: number;
-  role: RolesEnum;
+  role: Role;
   password: string;
   profile_id?: number;
   email?: string;
@@ -13,7 +13,7 @@ interface UserModelData {
 
 export class User {
   run: number;
-  role: RolesEnum;
+  role: Role;
   password: string;
   profile?: Profile;
 

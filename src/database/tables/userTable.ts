@@ -1,8 +1,8 @@
-import { RolesEnum } from '@/roles/roles.enum';
+import { Role } from '@/roles/roles.enum';
 
 export interface UserTable {
   run: number;
-  role: RolesEnum;
+  role: Role;
   password: string;
   password_attempts: number;
   enabled: boolean;
