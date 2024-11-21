@@ -1,0 +1,41 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+
+import { HashingService } from '@/common/providers';
+import { UsersService } from '@/users/users.service';
+
+import { LoginDto } from './dto/login.dto';
+import { LoginResponse } from './interfaces/login-response';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly hashingService: HashingService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  async login(loginDto: LoginDto): Promise<LoginResponse> {
+    const user = await this.usersService.findByRun(loginDto.run);
+
+    if (!user) {
+      throw new UnauthorizedException('Las credenciales no son correctas.');
+    }
+
+    const userDomain = user.toDomain();
+    const isPasswordValid = await this.hashingService.compare(
+      loginDto.password,
+      userDomain.password,
+    );
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Las credenciales no son correctas.');
+    }
+
+    const payload = { run: userDomain.run, role: userDomain.role };
+
+    return {
+      accessToken: await this.jwtService.signAsync(payload),
+    };
+  }
+}

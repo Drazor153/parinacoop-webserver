@@ -1,15 +1,40 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import {
   NestFastifyApplication,
   FastifyAdapter,
 } from '@nestjs/platform-fastify';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from '@fastify/helmet';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
-  await app.listen(3000);
+  app.enableCors({ origin: ['http://localhost:4200'] });
+  app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe());
+
+  await app.register(helmet);
+
+  const config = new DocumentBuilder()
+    .setTitle('Parinacoop WebServer')
+    .setDescription('Parinacoop REST API server')
+    .setVersion('1.0')
+    .build();
+
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('swagger', app, documentFactory);
+
+  const configService = app.get(ConfigService);
+  const port = +configService.get('PORT') || 3000;
+
+  await app.listen(port, '0.0.0.0', (_err, address) => {
+    console.log(`Listening to ${address}`);
+  });
 }
 bootstrap();
