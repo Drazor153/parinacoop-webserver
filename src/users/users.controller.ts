@@ -28,7 +28,7 @@ export class UsersController {
 
   @Get('profile/:run')
   @Roles(Role.ADMIN, Role.CLIENT)
-  getProfile(
+  getClientProfile(
     @User() user: UserRequest,
     @Param('run', ParseIntPipe) run: number,
   ) {
@@ -37,7 +37,7 @@ export class UsersController {
         'No está autorizado para ver este perfil',
       );
     }
-    return this.usersService.getProfile(user.run);
+    return this.usersService.getClientProfile(run);
   }
 
   @Post()

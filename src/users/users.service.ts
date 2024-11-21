@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { deconstructRut } from '@fdograph/rut-utilities';
 
 import { NullableType } from '@/utils/types/nullable.type';
@@ -23,10 +27,23 @@ export class UsersService {
     return this.userRepository.findByRun(run);
   }
 
-  async getProfile(run: number): Promise<User> {}
+  async getClientProfile(run: number): Promise<User> {
+    const client = await this.userRepository.getClient(run);
+    if (!client) {
+      throw new NotFoundException('Cliente no encontrado');
+    }
+    return client;
+  }
 
   async createClient(createClientDto: CreateClientDto): Promise<User> {
     const { digits } = deconstructRut(createClientDto.run);
+
+    const clientExists = await this.userRepository.findByRun(+digits);
+
+    if (clientExists) {
+      throw new UnauthorizedException('El cliente ya existe');
+    }
+
     const newClient = new User({
       run: +digits,
       role: Role.CLIENT,
@@ -66,7 +83,5 @@ export class UsersService {
     });
 
     return this.userRepository.create(newAdmin);
-
-    // return this.userRepository.create(newAdmin);
   }
 }

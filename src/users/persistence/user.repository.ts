@@ -35,7 +35,7 @@ export class UserPostgresRepository implements UserRepository {
 
     const newProfileResult = await this.db
       .insertInto('client_profile')
-      .values(profile)
+      .values({ ...profile, user_run: run })
       .returning([
         'id',
         'names',
@@ -55,7 +55,7 @@ export class UserPostgresRepository implements UserRepository {
 
     const newAddressResult = await this.db
       .insertInto('address')
-      .values(address)
+      .values({ ...address, user_run: run })
       .returning([
         'id',
         'type_address as typeAddress',
@@ -88,5 +88,35 @@ export class UserPostgresRepository implements UserRepository {
       .execute();
 
     return result.map((row) => new User(row));
+  }
+
+  async getClient(run: number): Promise<NullableType<User>> {
+    const result = await this.db
+      .selectFrom('user')
+      .innerJoin('client_profile', 'client_profile.user_run', 'user.run')
+      .where('run', '=', run)
+      .select([
+        'user.run',
+        'user.role',
+        'user.enabled',
+        'client_profile.names',
+        'client_profile.first_last_name as firstLastName',
+        'client_profile.second_last_name as secondLastName',
+        'client_profile.document_number as documentNumber',
+        'client_profile.email',
+        'client_profile.cellphone',
+        'client_profile.created_at as profileCreatedAt',
+      ])
+      .executeTakeFirst();
+
+    if (!result) return null;
+
+    const user = new User({
+      run: result.run,
+      role: result.role,
+    });
+    user.profile = result;
+
+    return user;
   }
 }
