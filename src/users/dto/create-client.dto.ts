@@ -6,7 +6,7 @@ import {
   IsEmail,
   IsPositive,
 } from 'class-validator';
-import { IsValidRun } from '@/auth/validators/rut.validator';
+import { IsValidRun } from '@/utils/validators/rut.validator';
 
 export class CreateClientDto {
   @IsValidRun()

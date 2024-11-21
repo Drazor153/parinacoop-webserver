@@ -8,11 +8,23 @@ import { JwtService } from '@nestjs/jwt';
 import { FastifyRequest } from 'fastify';
 
 import { UserRequest } from '@/utils/interfaces/user-request.interface';
+import { Reflector } from '@nestjs/core';
+import { NO_AUTH_KEY } from './no-auth.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private reflector: Reflector,
+    private jwtService: JwtService,
+  ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const noAuth = this.reflector.get<boolean>(
+      NO_AUTH_KEY,
+      context.getHandler(),
+    );
+
+    if (noAuth) return true;
+
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 

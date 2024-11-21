@@ -1,6 +1,6 @@
 import { Role } from '@/roles/roles.enum';
-import { Profile } from './profile';
-import { Address } from './address';
+import { PrimitiveProfile, Profile } from './profile';
+import { Address, PrimitiveAddress } from './address';
 
 export interface PrimitiveUser {
   run: number;
@@ -12,6 +12,14 @@ export interface PrimitiveUser {
 
 export class User {
   constructor(private attributes: PrimitiveUser) {}
+
+  set profile(data: PrimitiveProfile) {
+    this.attributes.profile = new Profile(data);
+  }
+
+  set address(data: PrimitiveAddress) {
+    this.attributes.address = new Address(data);
+  }
 
   toDomain() {
     return {

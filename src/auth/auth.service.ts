@@ -22,16 +22,17 @@ export class AuthService {
       throw new UnauthorizedException('Las credenciales no son correctas.');
     }
 
+    const userDomain = user.toDomain();
     const isPasswordValid = await this.hashingService.compare(
       loginDto.password,
-      user.password,
+      userDomain.password,
     );
 
     if (!isPasswordValid) {
       throw new UnauthorizedException('Las credenciales no son correctas.');
     }
 
-    const payload = { run: user.run, role: user.role };
+    const payload = { run: userDomain.run, role: userDomain.role };
 
     return {
       accessToken: await this.jwtService.signAsync(payload),

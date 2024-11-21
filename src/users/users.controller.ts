@@ -18,9 +18,11 @@ import { RolesGuard } from '@/roles/roles.guard';
 
 import { UsersService } from './users.service';
 import { CreateClientDto } from './dto/create-client.dto';
+import { CreateAdminDto } from './dto/create-admin.dto';
+import { NoAuth } from '@/auth/no-auth.decorator';
 
 @Controller('users')
-// @UseGuards(AuthGuard, RolesGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -35,12 +37,18 @@ export class UsersController {
         'No está autorizado para ver este perfil',
       );
     }
-    return this.usersService.findByRun(user.run);
+    return this.usersService.getProfile(user.run);
   }
 
   @Post()
-  // @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN)
   createClient(@Body() createClientDto: CreateClientDto) {
     return this.usersService.createClient(createClientDto);
+  }
+
+  @Post('admin')
+  @NoAuth()
+  firstAdmin(@Body() createAdminDto: CreateAdminDto) {
+    return this.usersService.firstAdmin(createAdminDto);
   }
 }

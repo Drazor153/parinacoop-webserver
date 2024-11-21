@@ -5,8 +5,7 @@ import { Database } from '@/database/database';
 
 import { User } from '@/users/domain/user';
 import { UserRepository } from '@/users/domain/user.repository';
-import { Profile } from '../domain/profile';
-import { Address } from '../domain/address';
+import { Role } from '@/roles/roles.enum';
 
 @Injectable()
 export class UserPostgresRepository implements UserRepository {
@@ -25,6 +24,15 @@ export class UserPostgresRepository implements UserRepository {
       .returning(['run', 'role'])
       .executeTakeFirst();
 
+    const newUser = new User({
+      run: newUserResult.run,
+      role: newUserResult.role,
+    });
+
+    if (!profile) {
+      return newUser;
+    }
+
     const newProfileResult = await this.db
       .insertInto('client_profile')
       .values(profile)
@@ -39,6 +47,12 @@ export class UserPostgresRepository implements UserRepository {
       ])
       .executeTakeFirst();
 
+    newUser.profile = newProfileResult;
+
+    if (!address) {
+      return newUser;
+    }
+
     const newAddressResult = await this.db
       .insertInto('address')
       .values(address)
@@ -52,12 +66,9 @@ export class UserPostgresRepository implements UserRepository {
       ])
       .executeTakeFirst();
 
-    return new User({
-      run: newUserResult.run,
-      role: newUserResult.role,
-      profile: new Profile(newProfileResult),
-      address: new Address(newAddressResult),
-    });
+    newUser.address = newAddressResult;
+
+    return newUser;
   }
 
   async findByRun(run: number): Promise<NullableType<User>> {
@@ -67,5 +78,15 @@ export class UserPostgresRepository implements UserRepository {
       .where('run', '=', run)
       .executeTakeFirst();
     return result ? new User(result) : null;
+  }
+
+  async findByRole(role: Role): Promise<User[]> {
+    const result = await this.db
+      .selectFrom('user')
+      .where('role', '=', role)
+      .select(['run', 'role', 'enabled'])
+      .execute();
+
+    return result.map((row) => new User(row));
   }
 }
