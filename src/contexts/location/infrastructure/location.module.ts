@@ -10,8 +10,8 @@ import {
 
 import { GetCommunesByRegionIdController, GetRegionsController } from './http';
 
-import { PostgresRegionRepository } from './repositories/postgres.region-repository';
-import { PostgresCommuneRepository } from './repositories/postgres.commune-repository';
+import { PostgreSqlRegionRepository } from './repositories/postgresql.region-repository';
+import { PostgreSqlCommuneRepository } from './repositories/postgresql.commune-repository';
 
 @Module({
   controllers: [GetRegionsController, GetCommunesByRegionIdController],
@@ -20,11 +20,11 @@ import { PostgresCommuneRepository } from './repositories/postgres.commune-repos
     GetCommunesByRegionIdUseCase,
     {
       provide: RegionRepository,
-      useClass: PostgresRegionRepository,
+      useClass: PostgreSqlRegionRepository,
     },
     {
       provide: CommuneRepository,
-      useClass: PostgresCommuneRepository,
+      useClass: PostgreSqlCommuneRepository,
     },
   ],
 })

@@ -4,7 +4,7 @@ import { RegionRepository } from '../../domain/ports/region.repository';
 import { Injectable } from '@/contexts/shared/dependency-injection/injectable';
 
 @Injectable()
-export class PostgresRegionRepository implements RegionRepository {
+export class PostgreSqlRegionRepository implements RegionRepository {
   constructor(private db: Database) {}
   async getAll(): Promise<Region[]> {
     const result = await this.db

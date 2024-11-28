@@ -4,7 +4,7 @@ import { CommuneRepository } from '../../domain/ports/commune.repository';
 import { Commune } from '../../domain/models/Commune';
 
 @Injectable()
-export class PostgresCommuneRepository implements CommuneRepository {
+export class PostgreSqlCommuneRepository implements CommuneRepository {
   constructor(private db: Database) {}
 
   async getByRegionId(regionId: number): Promise<Commune[]> {
