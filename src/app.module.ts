@@ -3,9 +3,9 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from './interfaces/environmentVariables';
 import { DatabaseModule } from './database/database.module';
-import { LocationModule } from './location/location.module';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './contexts/auth/infrastructure/auth.module';
+import { LocationModule } from './contexts/location/infrastructure/location.module';
 import { HealthModule } from './health/health.module';
 import { SharedModule } from './contexts/shared/shared.module';
 
@@ -26,8 +26,8 @@ import { SharedModule } from './contexts/shared/shared.module';
     }),
     HealthModule,
     AuthModule,
+    LocationModule,
     // UsersModule,
-    // LocationModule,
     // CommonModule,
     SharedModule,
   ],

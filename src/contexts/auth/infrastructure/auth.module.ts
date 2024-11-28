@@ -5,7 +5,7 @@ import { UserRepository } from '../domain/user.repository';
 import { PostgresUserRepository } from './repositories/postgres.user-repository';
 import { JwtModule } from '@nestjs/jwt';
 import { EnvironmentVariables } from '@/interfaces/environmentVariables';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
