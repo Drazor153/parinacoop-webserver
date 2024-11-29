@@ -9,8 +9,14 @@ export interface PrimitiveClient {
   street: string;
   number: number;
   detail: string;
-  regionId: number;
-  communeId: number;
+  region: {
+    id: number;
+    name: string
+  };
+  commune: {
+    id: number;
+    name: string
+  };
 }
 
 export class Client {

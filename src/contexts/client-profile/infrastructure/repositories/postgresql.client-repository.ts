@@ -13,8 +13,8 @@ export class PostgreSqlClientRepository implements ClientRepository {
       .innerJoin('address', 'address.user_run', 'client_profile.user_run')
       .innerJoin('commune', 'commune.id', 'address.commune_id')
       .innerJoin('region', 'region.id', 'commune.region_id')
-      .where('user_run', '=', run)
-      .select(['user_run as run',
+      .where('client_profile.user_run', '=', run)
+      .select(['client_profile.user_run as run',
         'document_number as documentNumber',
         'names',
         'first_last_name as firstLastName',
@@ -22,12 +22,33 @@ export class PostgreSqlClientRepository implements ClientRepository {
         'email',
         'cellphone',
         'street',
-        'number',
+        'address.number as number',
         'detail',
         'region_id as regionId',
-        'commune_id as communeId'
+        'region.name as regionName',
+        'commune_id as communeId',
+        'commune.name as communeName'
       ])
       .executeTakeFirst();
-    return result ? new Client(result): null;
+    return result ? new Client({
+      run: result.run,
+      documentNumber: result.documentNumber,
+      names: result.names,
+      firstLastName: result.firstLastName,
+      secondLastName: result.secondLastName,
+      email: result.email,
+      cellphone: result.cellphone,
+      street: result.street,
+      number: result.number,
+      detail: result.detail,
+      region: {
+        id: result.regionId,
+        name: result.regionName
+      },
+      commune: {
+        id: result.communeId,
+        name: result.communeName
+      }
+    }): null;
   }
 }

@@ -8,6 +8,7 @@ import { AuthModule } from './contexts/auth/infrastructure/auth.module';
 import { LocationModule } from './contexts/location/infrastructure/location.module';
 import { HealthModule } from './health/health.module';
 import { SharedModule } from './contexts/shared/shared.module';
+import { ClientProfileModule } from './contexts/client-profile/infrastructure/client-profile.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SharedModule } from './contexts/shared/shared.module';
     HealthModule,
     AuthModule,
     LocationModule,
+    ClientProfileModule,
     // UsersModule,
     // CommonModule,
     SharedModule,

@@ -20,6 +20,7 @@ export class LoginUseCase {
     if (!user) {
       throw new InvalidCredentialsException();
     }
+    // console.log(await this.hashingService.hash(dto.password));
 
     const { run, role, password } = user.toValue();
 

@@ -9,7 +9,7 @@ import { FastifyRequest } from 'fastify';
 
 import { UserRequest } from '@/utils/interfaces/user-request.interface';
 import { Reflector } from '@nestjs/core';
-import { NO_AUTH_KEY } from './no-auth.decorator';
+import { PUBLIC_KEY } from '../decorators/public.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,12 +18,12 @@ export class AuthGuard implements CanActivate {
     private jwtService: JwtService,
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const noAuth = this.reflector.get<boolean>(
-      NO_AUTH_KEY,
+    const isPublic = this.reflector.get<boolean>(
+      PUBLIC_KEY,
       context.getHandler(),
     );
 
-    if (noAuth) return true;
+    if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);

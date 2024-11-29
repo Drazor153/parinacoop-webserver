@@ -1,4 +1,4 @@
-import { Role } from '@/roles/roles.enum';
+import { Role } from '@/contexts/shared/enums/roles.enum';
 
 export interface UserTable {
   run: number;

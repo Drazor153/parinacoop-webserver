@@ -10,7 +10,7 @@ import { NullableType } from '@/utils/types/nullable.type';
 import { User } from './domain/user';
 import { UserRepository } from './domain/user.repository';
 import { CreateClientDto } from './dto/create-client.dto';
-import { Role } from '@/roles/roles.enum';
+import { Role } from '@/contexts/shared/enums/roles.enum';
 import { HashingService } from '@/common/providers';
 import { Address } from './domain/address';
 import { Profile } from './domain/profile';

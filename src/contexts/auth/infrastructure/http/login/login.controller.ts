@@ -9,12 +9,21 @@ import {
 } from '@nestjs/common';
 import { LoginHttpDto } from './login.http-dto';
 import { InvalidCredentialsException } from '@/contexts/auth/domain/invalid-credentials.exception';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class LoginController {
   constructor(private loginUseCase: LoginUseCase) {}
 
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Al iniciar sesión correctamente, se obtiene un access_token',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Las credenciales son incorrectas',
+  })
   @Post('login')
   async run(
     @Body() loginHttpDto: LoginHttpDto,

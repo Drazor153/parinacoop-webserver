@@ -9,17 +9,17 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { AuthGuard } from '@/auth/auth.guard';
-import { User } from '@/utils/decorators/user.decorator';
+import { AuthGuard } from '@/contexts/shared/guards/auth.guard';
+import { User } from '@/contexts/shared/decorators/user.decorator';
 import { UserRequest } from '@/utils/interfaces/user-request.interface';
 import { Roles } from '@/roles/roles.decorator';
-import { Role } from '@/roles/roles.enum';
+import { Role } from '@/contexts/shared/enums/roles.enum';
 import { RolesGuard } from '@/roles/roles.guard';
 
 import { UsersService } from './users.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { CreateAdminDto } from './dto/create-admin.dto';
-import { NoAuth } from '@/auth/no-auth.decorator';
+import { Public } from '@/contexts/shared/decorators/public.decorator';
 
 @Controller('users')
 @UseGuards(AuthGuard, RolesGuard)
@@ -47,7 +47,7 @@ export class UsersController {
   }
 
   @Post('admin')
-  @NoAuth()
+  @Public()
   firstAdmin(@Body() createAdminDto: CreateAdminDto) {
     return this.usersService.firstAdmin(createAdminDto);
   }

@@ -25,6 +25,7 @@ async function bootstrap() {
     .setTitle('Parinacoop WebServer')
     .setDescription('Parinacoop REST API server')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

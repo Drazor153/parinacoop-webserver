@@ -1,4 +1,4 @@
-import { Role } from '@/roles/roles.enum';
+import { Role } from '@/contexts/shared/enums/roles.enum';
 import { PrimitiveProfile, Profile } from './profile';
 import { Address, PrimitiveAddress } from './address';
 

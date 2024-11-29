@@ -5,7 +5,7 @@ import { Database } from '@/database/database';
 
 import { User } from '@/users/domain/user';
 import { UserRepository } from '@/users/domain/user.repository';
-import { Role } from '@/roles/roles.enum';
+import { Role } from '@/contexts/shared/enums/roles.enum';
 
 @Injectable()
 export class UserPostgresRepository implements UserRepository {
