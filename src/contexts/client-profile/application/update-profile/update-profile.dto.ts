@@ -1,4 +1,4 @@
-export interface PrimitiveClient {
+export interface UpdateProfileDto {
   run: number;
   documentNumber: number;
   names: string;
@@ -11,12 +11,4 @@ export interface PrimitiveClient {
   detail: string;
   regionId: number;
   communeId: number;
-}
-
-export class Client {
-  constructor(private attributes: PrimitiveClient) {}
-
-  toValue(): PrimitiveClient {
-    return this.attributes;
-  }
 }
