@@ -9,7 +9,9 @@ export class UpdateProfileUseCase {
 
   async execute(dto: UpdateProfileDto): Promise<{ msg: string }> {
     const clientProfile = new Client(dto);
+
     await this.clientRepository.updateProfile(clientProfile);
+
     return { msg: 'Perfil actualizado correctamente' };
   }
 }

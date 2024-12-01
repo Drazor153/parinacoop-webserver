@@ -19,12 +19,12 @@ export const up: Migration['up'] = async (db: Database) => {
       })
       .returning(['id'])
       .executeTakeFirst();
-    console.log(`Inserted region ${region.name} with id ${newRegionId.id}`);
+    console.log(`Inserted region ${region.name} with id ${newRegionId!.id}`);
 
     const communesToInsert = region.communes.map((commune) => ({
       name: commune.name,
       postal_code: commune.postalCode,
-      region_id: newRegionId.id,
+      region_id: newRegionId!.id,
     }));
 
     communes.push(...communesToInsert);

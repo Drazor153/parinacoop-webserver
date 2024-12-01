@@ -9,6 +9,7 @@ import { LocationModule } from './contexts/location/infrastructure/location.modu
 import { HealthModule } from './health/health.module';
 import { SharedModule } from './contexts/shared/shared.module';
 import { ClientProfileModule } from './contexts/client-profile/infrastructure/client-profile.module';
+import { DapModule } from './contexts/dap/infrastructure/dap.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ClientProfileModule } from './contexts/client-profile/infrastructure/cl
     AuthModule,
     LocationModule,
     ClientProfileModule,
+    DapModule,
     // UsersModule,
     // CommonModule,
     SharedModule,
