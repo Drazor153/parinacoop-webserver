@@ -1,5 +1,5 @@
 import { DapStatus } from '../dap-status.enum';
-import { PrimitiveSDap, SDap } from './SDap';
+import { SDap } from './SDap';
 
 export interface PrimitiveDap {
   id: number;
@@ -20,7 +20,7 @@ export interface PrimitiveDap {
 export class Dap {
   constructor(private attributes: PrimitiveDap) {}
 
-  static create(userRun: number, simulatedDap: SDap, ): Dap {
+  static create(userRun: number, simulatedDap: SDap): Dap {
     const sDapValue = simulatedDap.toValue();
     return new Dap({
       ...sDapValue,

@@ -47,4 +47,27 @@ export class PostgreSqlDapRepository implements DapRepository {
 
     return new Dap(result!);
   }
+  async getDapsByUserRun(run: number): Promise<Dap[]> {
+    const result = await this.db
+      .selectFrom('dap')
+      .where('user_run', '=', run)
+      .select([
+        'id',
+        'user_run as userRun',
+        'type',
+        'currency_type as currencyType',
+        'days',
+        'status',
+        'initial_date as initialDate',
+        'initial_amount as initialAmount',
+        'due_date as dueDate',
+        'profit',
+        'interest_rate_in_period as interestRateInPeriod',
+        'dap.interest_rate_in_month as interestRateInMonth',
+        'final_amount as finalAmount',
+      ])
+      .execute();
+
+    return result.map((row) => new Dap(row));
+  }
 }

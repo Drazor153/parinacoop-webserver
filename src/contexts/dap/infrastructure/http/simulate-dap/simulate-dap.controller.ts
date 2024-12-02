@@ -9,7 +9,9 @@ export class SimulateDapController {
 
   @HttpCode(HttpStatus.OK)
   @Post('simulate')
-  async run(@Body() httpDto: SimulateDapDto): Promise<{ sDaps: PrimitiveSDap[] }> {
+  async run(
+    @Body() httpDto: SimulateDapDto,
+  ): Promise<{ sDaps: PrimitiveSDap[] }> {
     return await this.simulateDapUseCase.run(httpDto);
   }
 }

@@ -5,7 +5,7 @@ export const up: Migration['up'] = async (db) => {
     .createTable('dap')
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('user_run', 'integer', (col) =>
-      col.references('user.run').onDelete('cascade').unique().notNull(),
+      col.references('user.run').onDelete('cascade').notNull(),
     )
     .addColumn('type', 'varchar', (col) => col.notNull())
     .addColumn('currency_type', 'varchar', (col) => col.notNull())

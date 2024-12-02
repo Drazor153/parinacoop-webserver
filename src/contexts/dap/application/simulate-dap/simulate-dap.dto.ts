@@ -1,4 +1,4 @@
-export interface SimulateDapDto{
+export interface SimulateDapDto {
   type: string;
   initialAmount: number;
 }
