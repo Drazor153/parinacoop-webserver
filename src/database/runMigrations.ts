@@ -11,7 +11,7 @@ import {
 } from 'kysely';
 import { config } from 'dotenv';
 
-import { EnvironmentVariables } from '@/interfaces/environmentVariables';
+import { EnvironmentVariables } from '@/config/environment-variables.schema';
 
 config();
 
@@ -21,11 +21,11 @@ async function migrateToLatest() {
   const db = new Kysely({
     dialect: new PostgresDialect({
       pool: new Pool({
-        host: configService.get('POSTGRES_HOST'),
-        database: configService.get('POSTGRES_DB'),
-        port: configService.get('POSTGRES_PORT'),
-        user: configService.get('POSTGRES_USER'),
-        password: configService.get('POSTGRES_PASSWORD'),
+        host: configService.get('DB_HOST'),
+        database: configService.get('DB_NAME'),
+        port: configService.get('DB_PORT'),
+        user: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
       }),
     }),
   });

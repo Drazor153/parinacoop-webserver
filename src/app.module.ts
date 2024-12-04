@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EnvironmentVariables } from './interfaces/environmentVariables';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentVariables } from './config/environment-variables.schema';
 import { DatabaseModule } from './database/database.module';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './contexts/auth/infrastructure/auth.module';
@@ -10,20 +10,19 @@ import { HealthModule } from './health/health.module';
 import { SharedModule } from './contexts/shared/shared.module';
 import { ClientProfileModule } from './contexts/client-profile/infrastructure/client-profile.module';
 import { DapModule } from './contexts/dap/infrastructure/dap.module';
+import { ConfigModule } from './config/config.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    ConfigModule,
     DatabaseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService<EnvironmentVariables>) => ({
-        host: configService.get('POSTGRES_HOST')!,
-        database: configService.get('POSTGRES_DB')!,
-        port: configService.get('POSTGRES_PORT')!,
-        user: configService.get('POSTGRES_USER')!,
-        password: configService.get('POSTGRES_PASSWORD')!,
+        host: configService.get('DB_HOST'),
+        database: configService.get('DB_NAME'),
+        port: configService.get('DB_PORT'),
+        user: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
       }),
     }),
     HealthModule,
