@@ -13,14 +13,15 @@ import {
   GetDapsController,
   SimulateDapController,
 } from './http';
+
 import { PostgreSqlDapRepository } from './repositories/postgresql.dap-repository';
 
 @Module({
-  controllers: [CreateDapController, SimulateDapController, GetDapsController],
+  controllers: [GetDapsController, CreateDapController, SimulateDapController],
   providers: [
+    GetDapsUseCase,
     CreateDapUseCase,
     SimulateDapUseCase,
-    GetDapsUseCase,
     {
       provide: DapRepository,
       useClass: PostgreSqlDapRepository,

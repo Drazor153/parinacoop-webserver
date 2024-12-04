@@ -12,9 +12,9 @@ import {
 import { AuthGuard } from '@/contexts/shared/guards/auth.guard';
 import { User } from '@/contexts/shared/decorators/user.decorator';
 import { UserRequest } from '@/utils/interfaces/user-request.interface';
-import { Roles } from '@/roles/roles.decorator';
+import { Roles } from '@/contexts/shared/decorators/roles.decorator';
 import { Role } from '@/contexts/shared/enums/roles.enum';
-import { RolesGuard } from '@/roles/roles.guard';
+import { RolesGuard } from '@/contexts/shared/guards/roles.guard';
 
 import { UsersService } from './users.service';
 import { CreateClientDto } from './dto/create-client.dto';

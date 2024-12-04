@@ -11,17 +11,18 @@ import {
 import { AuthGuard } from '@/contexts/shared/guards/auth.guard';
 import { User } from '@/contexts/shared/decorators/user.decorator';
 import { UserRequest } from '@/utils/interfaces/user-request.interface';
-import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PrimitiveClient } from '@/contexts/client-profile/domain/models/Client';
 import { GetProfileUseCase } from '@/contexts/client-profile/application/get-profile/get-profile.use-case';
 import { ClientNotFoundError } from '@/contexts/client-profile/domain/client-not-found.exception';
 
-@Controller('profile')
+@ApiTags('Perfil de cliente')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
+@Controller('profile')
 export class GetProfileController {
   constructor(private getProfileUseCase: GetProfileUseCase) {}
 
-  @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Perfil de cliente encontrado',

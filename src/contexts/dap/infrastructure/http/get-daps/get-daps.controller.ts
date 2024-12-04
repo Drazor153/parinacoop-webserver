@@ -11,17 +11,18 @@ import {
 import { GetDapsUseCase } from '@/contexts/dap/application';
 
 import { PrimitiveDap } from '@/contexts/dap/domain/models/Dap';
-import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@/contexts/shared/guards/auth.guard';
 import { User } from '@/contexts/shared/decorators/user.decorator';
 import { UserRequest } from '@/utils/interfaces/user-request.interface';
 
-@Controller('clients')
+@ApiTags('DAP de clientes')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
+@Controller('clients')
 export class GetDapsController {
   constructor(private getDapsUseCase: GetDapsUseCase) {}
 
-  @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Lista de los depósitos a plazo del cliente',

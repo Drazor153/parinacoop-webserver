@@ -7,7 +7,9 @@ import { validate } from './env.validation';
     NestJsConfigModule.forRoot({
       isGlobal: true,
       envFilePath:
-        process.env.NODE_ENV === 'development' ? '.env.development.local' : '.env.production.local',
+        process.env.NODE_ENV === 'development'
+          ? '.env.development.local'
+          : '.env.production.local',
       validate,
     }),
   ],

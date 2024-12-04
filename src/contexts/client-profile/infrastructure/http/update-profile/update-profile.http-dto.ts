@@ -1,6 +1,6 @@
 import { IsNumber } from 'class-validator';
 
-export class UpdateProfileDtoHttp {
+export class UpdateProfileHttpDto {
   documentNumber!: number;
   names!: string;
   firstLastName!: string;

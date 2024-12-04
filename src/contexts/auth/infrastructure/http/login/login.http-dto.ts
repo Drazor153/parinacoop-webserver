@@ -2,12 +2,18 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginHttpDto {
-  @ApiProperty()
+  /**
+   * RUN del cliente
+   * @example 12345678
+   */
   @IsInt()
   @IsNotEmpty()
   run!: number;
 
-  @ApiProperty()
+  /**
+   * Contraseña del cliente
+   * @example password
+   */
   @IsString()
   @IsNotEmpty()
   password!: string;

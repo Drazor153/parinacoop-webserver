@@ -12,58 +12,58 @@ export class CreateClientDto {
   @IsValidRun()
   @IsString()
   @IsNotEmpty()
-  run: string;
+  run!: string;
 
   @MinLength(8)
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password!: string;
 
   @IsPositive()
   @IsInt()
   @IsNotEmpty()
-  documentNumber: number;
+  documentNumber!: number;
 
   @IsEmail()
   @IsString()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @IsString()
   @IsNotEmpty()
-  cellphone: string;
+  cellphone!: string;
 
   @IsString()
   @IsNotEmpty()
-  names: string;
+  names!: string;
 
   @IsString()
   @IsNotEmpty()
-  firstLastName: string;
+  firstLastName!: string;
 
   @IsString()
   @IsNotEmpty()
-  secondLastName: string;
+  secondLastName!: string;
 
   @IsString()
   @IsNotEmpty()
-  typeAddress: string;
+  typeAddress!: string;
 
   @IsString()
   @IsNotEmpty()
-  street: string;
+  street!: string;
 
   @IsPositive()
   @IsInt()
   @IsNotEmpty()
-  number: number;
+  number!: number;
 
   @IsString()
   @IsNotEmpty()
-  detail: string;
+  detail!: string;
 
   @IsPositive()
   @IsInt()
   @IsNotEmpty()
-  communeId: number;
+  communeId!: number;
 }

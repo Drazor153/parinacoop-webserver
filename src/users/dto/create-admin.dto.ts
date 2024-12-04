@@ -6,10 +6,10 @@ export class CreateAdminDto {
   @IsValidRun()
   @IsString()
   @IsNotEmpty()
-  run: string;
+  run!: string;
 
   @MinLength(8)
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password!: string;
 }

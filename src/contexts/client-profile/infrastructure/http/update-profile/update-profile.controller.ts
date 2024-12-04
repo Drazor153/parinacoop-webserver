@@ -1,4 +1,4 @@
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -11,18 +11,19 @@ import {
 import { UpdateProfileUseCase } from '@/contexts/client-profile/application/update-profile/update-profile.use-case';
 import { AuthGuard } from '@/contexts/shared/guards/auth.guard';
 
-import { UpdateProfileDtoHttp } from './update-profile.dto-http';
+import { UpdateProfileHttpDto } from './update-profile.http-dto';
 
-@Controller('profile')
+@ApiTags('Perfil de cliente')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
+@Controller('profile')
 export class UpdateProfileController {
   constructor(private updateProfileUseCase: UpdateProfileUseCase) {}
 
-  @ApiBearerAuth()
   @Patch(':run')
   async run(
     @Param('run', ParseIntPipe) run: number,
-    @Body() dtoHttp: UpdateProfileDtoHttp,
+    @Body() dtoHttp: UpdateProfileHttpDto,
   ): Promise<{ msg: string }> {
     return await this.updateProfileUseCase.execute({ ...dtoHttp, run });
   }
