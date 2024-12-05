@@ -1,69 +1,71 @@
+import { IsValidRun } from '@/utils/validators/rut.validator';
 import {
-  IsNotEmpty,
-  MinLength,
   IsString,
+  MinLength,
+  IsPositive,
   IsInt,
   IsEmail,
-  IsPositive,
+  Min,
+  IsNotEmpty,
+  IsPhoneNumber,
+  MaxLength,
 } from 'class-validator';
-import { IsValidRun } from '@/utils/validators/rut.validator';
 
-export class CreateClientDto {
+export class CreateClientHttpDto {
   @IsValidRun()
   @IsString()
-  @IsNotEmpty()
   run!: string;
 
   @MinLength(8)
   @IsString()
-  @IsNotEmpty()
   password!: string;
 
-  @IsPositive()
+  @Min(100000000)
   @IsInt()
-  @IsNotEmpty()
   documentNumber!: number;
 
   @IsEmail()
   @IsString()
-  @IsNotEmpty()
   email!: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsPhoneNumber('CL')
   cellphone!: string;
 
   @IsString()
+  @MaxLength(50)
   @IsNotEmpty()
   names!: string;
 
   @IsString()
+  @MaxLength(20)
   @IsNotEmpty()
   firstLastName!: string;
 
   @IsString()
+  @MaxLength(20)
   @IsNotEmpty()
   secondLastName!: string;
 
   @IsString()
+  @MaxLength(20)
   @IsNotEmpty()
   typeAddress!: string;
 
   @IsString()
+  @MaxLength(50)
   @IsNotEmpty()
   street!: string;
 
   @IsPositive()
   @IsInt()
-  @IsNotEmpty()
   number!: number;
 
   @IsString()
+  @MaxLength(50)
   @IsNotEmpty()
   detail!: string;
 
   @IsPositive()
   @IsInt()
-  @IsNotEmpty()
   communeId!: number;
 }

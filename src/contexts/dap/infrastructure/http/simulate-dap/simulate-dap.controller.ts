@@ -12,7 +12,7 @@ import { SimulateDapUseCase } from '@/contexts/dap/application';
 import { PrimitiveSDap } from '@/contexts/dap/domain/models/SDap';
 import { AuthGuard } from '@/contexts/shared/guards/auth.guard';
 
-import { SimulateDapDto } from './simulate-dap.http-dto';
+import { SimulateDapHttpDto } from './simulate-dap.http-dto';
 
 @ApiTags('DAP de clientes')
 @ApiBearerAuth()
@@ -24,7 +24,7 @@ export class SimulateDapController {
   @HttpCode(HttpStatus.OK)
   @Post('simulate')
   async run(
-    @Body() httpDto: SimulateDapDto,
+    @Body() httpDto: SimulateDapHttpDto,
   ): Promise<{ sDaps: PrimitiveSDap[] }> {
     return await this.simulateDapUseCase.run(httpDto);
   }

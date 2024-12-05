@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from './config/environment-variables.schema';
 import { DatabaseModule } from './database/database.module';
@@ -11,6 +10,7 @@ import { SharedModule } from './contexts/shared/shared.module';
 import { ClientProfileModule } from './contexts/client-profile/infrastructure/client-profile.module';
 import { DapModule } from './contexts/dap/infrastructure/dap.module';
 import { ConfigModule } from './config/config.module';
+import { AdminModule } from './contexts/admin/infrastructure/admin.module';
 
 @Module({
   imports: [
@@ -26,12 +26,11 @@ import { ConfigModule } from './config/config.module';
       }),
     }),
     HealthModule,
+    AdminModule,
     AuthModule,
-    LocationModule,
     ClientProfileModule,
     DapModule,
-    // UsersModule,
-    // CommonModule,
+    LocationModule,
     SharedModule,
   ],
 })

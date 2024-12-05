@@ -1,15 +1,12 @@
-import { IsString, IsNotEmpty, MinLength } from 'class-validator';
-
 import { IsValidRun } from '@/utils/validators/rut.validator';
+import { IsString, MinLength } from 'class-validator';
 
-export class CreateAdminDto {
+export class CreateFirstAdminHttpDto {
   @IsValidRun()
   @IsString()
-  @IsNotEmpty()
   run!: string;
 
   @MinLength(8)
   @IsString()
-  @IsNotEmpty()
   password!: string;
 }

@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, Min } from 'class-validator';
 
-export class SimulateDapDto {
+export class SimulateDapHttpDto {
   @IsNotEmpty()
   type!: string;
 
