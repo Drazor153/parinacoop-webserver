@@ -17,6 +17,7 @@ export class CreateClientHttpDto {
   run!: string;
 
   @MinLength(8)
+  @MaxLength(20)
   @IsString()
   password!: string;
 
@@ -26,6 +27,7 @@ export class CreateClientHttpDto {
 
   @IsEmail()
   @IsString()
+  @MaxLength(50)
   email!: string;
 
   @IsPhoneNumber('CL')

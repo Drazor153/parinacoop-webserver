@@ -5,8 +5,10 @@ import {
 } from './database.module-definition';
 import { Database } from './database';
 import { DatabaseOptions } from './databaseOptions';
-import { PostgresDialect } from 'kysely';
+import { MysqlDialect, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
+import { createPool } from 'mysql2';
+import { dialectGenerator } from './dialect-generator';
 
 @Global()
 @Module({
@@ -16,15 +18,12 @@ import { Pool } from 'pg';
       provide: Database,
       inject: [DATABASE_OPTIONS],
       useFactory: (databaseOptions: DatabaseOptions) => {
-        const dialect = new PostgresDialect({
-          pool: new Pool({
-            database: databaseOptions.database,
-            host: databaseOptions.host,
-            user: databaseOptions.user,
-            port: databaseOptions.port,
-            password: databaseOptions.password,
-            max: 10,
-          }),
+        const dialect = dialectGenerator('mysql', {
+          host: databaseOptions.host,
+          database: databaseOptions.database,
+          port: databaseOptions.port,
+          user: databaseOptions.user,
+          password: databaseOptions.password,
         });
 
         return new Database({

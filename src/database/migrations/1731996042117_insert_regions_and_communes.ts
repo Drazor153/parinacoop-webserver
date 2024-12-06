@@ -9,22 +9,22 @@ export const up: Migration['up'] = async (db: Database) => {
     region_id: number;
   }[] = [];
   for (const region of regions_communes) {
-    const newRegionId = await db
-      .insertInto('region')
-      .values({
-        name: region.name,
-        roman_number: region.romanNumber,
-        number: region.number,
-        abbreviation: region.abbreviation,
-      })
-      .returning(['id'])
-      .executeTakeFirst();
-    console.log(`Inserted region ${region.name} with id ${newRegionId!.id}`);
+    const { communes, ...regionData } = region;
+
+    await db.insertInto('region').values(regionData).executeTakeFirst();
+
+    const newRegion = await db
+      .selectFrom('region')
+      .where('roman_number', '=', region.roman_number)
+      .select('id')
+      .executeTakeFirstOrThrow();
+
+    console.log(`Inserted region ${region.name} with id ${newRegion.id}`);
 
     const communesToInsert = region.communes.map((commune) => ({
       name: commune.name,
-      postal_code: commune.postalCode,
-      region_id: newRegionId!.id,
+      postal_code: commune.postal_code,
+      region_id: newRegion.id,
     }));
 
     communes.push(...communesToInsert);

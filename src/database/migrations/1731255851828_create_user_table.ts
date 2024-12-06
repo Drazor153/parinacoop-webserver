@@ -4,8 +4,8 @@ export const up: Migration['up'] = async (db) => {
   await db.schema
     .createTable('user')
     .addColumn('run', 'integer', (col) => col.primaryKey())
-    .addColumn('role', 'varchar', (col) => col.notNull())
-    .addColumn('password', 'varchar', (col) => col.notNull())
+    .addColumn('role', 'varchar(10)', (col) => col.notNull())
+    .addColumn('password', 'varchar(20)', (col) => col.notNull())
     .addColumn('password_attempts', 'smallint', (col) =>
       col.notNull().defaultTo(3),
     )
