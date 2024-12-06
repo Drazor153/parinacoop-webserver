@@ -28,7 +28,12 @@ export class PostgreSqlDapRepository implements DapRepository {
         final_amount: data.initialAmount + data.profit,
         initial_date: data.initialDate,
       })
-      .returning([
+      .executeTakeFirstOrThrow();
+
+    const newDap = await this.db
+      .selectFrom('dap')
+      .where('id', '=', Number(result.insertId))
+      .select([
         'id',
         'user_run as userRun',
         'type',
@@ -45,7 +50,7 @@ export class PostgreSqlDapRepository implements DapRepository {
       ])
       .executeTakeFirstOrThrow();
 
-    return new Dap(result);
+    return new Dap(newDap);
   }
   async getDapsByUserRun(run: number): Promise<Dap[]> {
     const result = await this.db

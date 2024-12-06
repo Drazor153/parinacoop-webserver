@@ -17,7 +17,7 @@ export class LoginUseCase {
 
   async execute(dto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.userRepository.getByRun(dto.run);
-    
+
     if (!user) {
       throw new InvalidCredentialsException();
     }
