@@ -21,7 +21,7 @@
     "prepare": "husky",
     "commitlint": "commitlint --edit",
     "kysely": "kysely",
-    "migrations": "ts-node ./src/database/runMigrations.ts",
+    "migrations": "cross-env NODE_ENV=development ts-node ./src/database/runMigrations.ts",
     "mkm": "ts-node ./src/database/migrator.ts"
   },
   "dependencies": {

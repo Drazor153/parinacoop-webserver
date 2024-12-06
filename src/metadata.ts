@@ -99,13 +99,23 @@ export default async () => {
           {
             CreateClientHttpDto: {
               run: { required: true, type: () => String },
-              password: { required: true, type: () => String, minLength: 8 },
+              password: {
+                required: true,
+                type: () => String,
+                minLength: 8,
+                maxLength: 20,
+              },
               documentNumber: {
                 required: true,
                 type: () => Number,
                 minimum: 100000000,
               },
-              email: { required: true, type: () => String, format: 'email' },
+              email: {
+                required: true,
+                type: () => String,
+                maxLength: 50,
+                format: 'email',
+              },
               cellphone: { required: true, type: () => String },
               names: { required: true, type: () => String, maxLength: 50 },
               firstLastName: {

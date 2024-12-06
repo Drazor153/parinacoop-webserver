@@ -43,9 +43,9 @@ export class PostgreSqlDapRepository implements DapRepository {
         'dap.interest_rate_in_month as interestRateInMonth',
         'final_amount as finalAmount',
       ])
-      .executeTakeFirst();
+      .executeTakeFirstOrThrow();
 
-    return new Dap(result!);
+    return new Dap(result);
   }
   async getDapsByUserRun(run: number): Promise<Dap[]> {
     const result = await this.db

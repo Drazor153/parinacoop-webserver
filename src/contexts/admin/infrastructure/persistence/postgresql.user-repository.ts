@@ -29,20 +29,19 @@ export class PostgreSqlUserRepository implements UserRepository {
 
   async create(user: User): Promise<User> {
     const { run, role, password, address, profile } = user.toValue();
-    const newUserClient = await this.db
+    await this.db
       .insertInto('user')
       .values({
         run,
         role,
         password: password!,
       })
-      .returning(['run', 'role'])
       .executeTakeFirstOrThrow();
 
-    const userClient = new User(newUserClient);
+    const userClient = new User({ run, role });
 
     if (profile) {
-      const newProfile = await this.db
+      const profileResult = await this.db
         .insertInto('client_profile')
         .values({
           user_run: run,
@@ -53,21 +52,12 @@ export class PostgreSqlUserRepository implements UserRepository {
           cellphone: profile.cellphone,
           document_number: profile.documentNumber,
         })
-        .returning([
-          'id',
-          'names',
-          'first_last_name as firstLastName',
-          'second_last_name as secondLastName',
-          'document_number as documentNumber',
-          'email',
-          'cellphone',
-        ])
         .executeTakeFirstOrThrow();
-      userClient.profile = newProfile;
+      console.log(profileResult);
     }
 
     if (address) {
-      const newAddress = await this.db
+      const addressResult = await this.db
         .insertInto('address')
         .values({
           user_run: run,
@@ -77,16 +67,8 @@ export class PostgreSqlUserRepository implements UserRepository {
           detail: address.detail,
           commune_id: address.communeId,
         })
-        .returning([
-          'id',
-          'type_address as typeAddress',
-          'street',
-          'number',
-          'detail',
-          'commune_id as communeId',
-        ])
         .executeTakeFirstOrThrow();
-      userClient.address = newAddress;
+      console.log(addressResult);
     }
 
     return userClient;

@@ -5,7 +5,7 @@ export const up: Migration['up'] = async (db) => {
     .createTable('user')
     .addColumn('run', 'integer', (col) => col.primaryKey())
     .addColumn('role', 'varchar(10)', (col) => col.notNull())
-    .addColumn('password', 'varchar(20)', (col) => col.notNull())
+    .addColumn('password', 'binary(60)', (col) => col.notNull())
     .addColumn('password_attempts', 'smallint', (col) =>
       col.notNull().defaultTo(3),
     )

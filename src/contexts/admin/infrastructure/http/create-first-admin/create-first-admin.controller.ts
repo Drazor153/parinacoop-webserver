@@ -25,6 +25,8 @@ export class CreateFirstAdminController {
     try {
       return await this.createFirstAdminUseCase.execute(httpDto);
     } catch (error) {
+      console.log(error);
+
       if (error instanceof AdminExistsException) {
         throw new UnauthorizedException(error.message);
       }

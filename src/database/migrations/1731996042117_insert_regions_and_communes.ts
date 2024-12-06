@@ -11,27 +11,27 @@ export const up: Migration['up'] = async (db: Database) => {
   for (const region of regions_communes) {
     const { communes, ...regionData } = region;
 
-    await db.insertInto('region').values(regionData).executeTakeFirst();
+    const { insertId } = await db
+      .insertInto('region')
+      .values(regionData)
+      .executeTakeFirst();
 
-    const newRegion = await db
-      .selectFrom('region')
-      .where('roman_number', '=', region.roman_number)
-      .select('id')
-      .executeTakeFirstOrThrow();
-
-    console.log(`Inserted region ${region.name} with id ${newRegion.id}`);
+    console.log(`Inserted region ${region.name} with id ${insertId}`);
 
     const communesToInsert = region.communes.map((commune) => ({
       name: commune.name,
       postal_code: commune.postal_code,
-      region_id: newRegion.id,
+      region_id: insertId,
     }));
 
     communes.push(...communesToInsert);
   }
 
   console.log('Inserting communes');
-  await db.insertInto('commune').values(communes).execute();
+  await sql`INSERT INTO commune values ${communes.map((c) => `(${c.name}, ${c.postal_code}, ${c.region_id})`).join(', ')}`.execute(
+    db,
+  ),
+    await db.insertInto('commune').values(communes).execute();
 };
 
 export const down: Migration['down'] = async (db) => {
