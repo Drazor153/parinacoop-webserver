@@ -31,10 +31,12 @@ export class LoginController {
   @Post('login')
   async run(
     @Body() loginHttpDto: LoginHttpDto,
-  ): Promise<{ accessToken: string } | undefined> {
+  ): Promise<{ accessToken: string }> {
     try {
       return await this.loginUseCase.execute(loginHttpDto);
     } catch (error) {
+      console.error(error);
+
       if (error instanceof InvalidCredentialsException) {
         throw new UnauthorizedException('Las credenciales no son correctas.');
       }

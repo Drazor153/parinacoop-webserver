@@ -16,10 +16,10 @@ export const up: Migration['up'] = async (db) => {
     .addColumn('due_date', 'date', (col) => col.notNull())
     .addColumn('final_amount', 'integer', (col) => col.notNull())
     .addColumn('profit', 'integer', (col) => col.notNull())
-    .addColumn('interest_rate_in_period', 'decimal(3, 2)', (col) =>
+    .addColumn('interest_rate_in_period', 'decimal(7, 4)', (col) =>
       col.notNull(),
     )
-    .addColumn('interest_rate_in_month', 'decimal(3, 2)', (col) =>
+    .addColumn('interest_rate_in_month', 'decimal(7, 4)', (col) =>
       col.notNull(),
     )
     .addForeignKeyConstraint(

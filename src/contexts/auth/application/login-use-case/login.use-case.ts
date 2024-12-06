@@ -17,6 +17,7 @@ export class LoginUseCase {
 
   async execute(dto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.userRepository.getByRun(dto.run);
+    
     if (!user) {
       throw new InvalidCredentialsException();
     }
@@ -26,7 +27,7 @@ export class LoginUseCase {
 
     const isSamePassword = await this.hashingService.compare(
       dto.password,
-      password,
+      password.toString(),
     );
     if (!isSamePassword) {
       throw new InvalidCredentialsException();

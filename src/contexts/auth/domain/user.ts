@@ -3,7 +3,7 @@ import { Role } from '@/contexts/shared/enums/roles.enum';
 export interface PrimitiveUser {
   run: number;
   role: Role;
-  password: string;
+  password: Buffer;
 }
 export class User {
   constructor(private attributes: PrimitiveUser) {}
