@@ -7,6 +7,7 @@ import { AddressTable } from './tables/addressTable';
 import { UserSessionTable } from './tables/usersessionTable';
 import { PasswordResetTable } from './tables/passwordresetTable';
 import { DapTable } from './tables/dapTable';
+import { ParameterTable } from './tables/parameterTable';
 
 export interface Tables {
   region: RegionTable;
@@ -17,5 +18,6 @@ export interface Tables {
   user_session: UserSessionTable;
   password_reset: PasswordResetTable;
   dap: DapTable;
+  parameter: ParameterTable;
 }
 export class Database extends Kysely<Tables> {}

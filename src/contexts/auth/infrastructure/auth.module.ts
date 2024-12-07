@@ -4,8 +4,9 @@ import { LoginController } from './http/login/login.controller';
 import { UserRepository } from '../domain/user.repository';
 import { PostgresUserRepository } from './repositories/postgres.user-repository';
 import { JwtModule } from '@nestjs/jwt';
-import { EnvironmentVariables } from '@/interfaces/environmentVariables';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EnvironmentVariables } from '@/config/environment-variables.schema';
+import { ConfigService } from '@nestjs/config';
+import { ValidateJwtController } from './http/validate-jwt/validate-jwt.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
   ],
-  controllers: [LoginController],
+  controllers: [LoginController, ValidateJwtController],
   providers: [
     LoginUseCase,
     {

@@ -1,32 +1,33 @@
 import * as path from 'path';
-import { Pool } from 'pg';
 import { promises as fs } from 'fs';
 
 import { ConfigService } from '@nestjs/config';
-import {
-  FileMigrationProvider,
-  Kysely,
-  Migrator,
-  PostgresDialect,
-} from 'kysely';
+import { FileMigrationProvider, Kysely, Migrator } from 'kysely';
 import { config } from 'dotenv';
 
-import { EnvironmentVariables } from '@/interfaces/environmentVariables';
+import { EnvironmentVariables } from '@/config/environment-variables.schema';
+import { dialectGenerator } from './dialect-generator';
+import { cwd } from 'process';
 
-config();
-
-const configService = new ConfigService<EnvironmentVariables>();
+config({
+  path: path.join(
+    cwd(),
+    process.env.NODE_ENV === 'production'
+      ? '.env.production.local'
+      : '.env.development.local',
+  ),
+});
 
 async function migrateToLatest() {
+  const configService = new ConfigService<EnvironmentVariables>();
+
   const db = new Kysely({
-    dialect: new PostgresDialect({
-      pool: new Pool({
-        host: configService.get('POSTGRES_HOST'),
-        database: configService.get('POSTGRES_DB'),
-        port: configService.get('POSTGRES_PORT'),
-        user: configService.get('POSTGRES_USER'),
-        password: configService.get('POSTGRES_PASSWORD'),
-      }),
+    dialect: dialectGenerator('mysql', {
+      host: configService.get('DB_HOST'),
+      database: configService.get('DB_NAME'),
+      port: configService.get('DB_PORT'),
+      user: configService.get('DB_USER'),
+      password: configService.get('DB_PASSWORD'),
     }),
   });
 

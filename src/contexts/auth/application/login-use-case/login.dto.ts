@@ -1,4 +1,4 @@
-export class LoginDto {
-  run!: number;
-  password!: string;
+export interface LoginDto {
+  run: number;
+  password: string;
 }

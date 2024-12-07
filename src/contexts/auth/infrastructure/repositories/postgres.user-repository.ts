@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
+
 import { Database } from '@/database/database';
+
 import { User } from '../../domain/user';
 import { UserRepository } from '../../domain/user.repository';
-import { Injectable } from '@/contexts/shared/dependency-injection/injectable';
 
 @Injectable()
 export class PostgresUserRepository implements UserRepository {

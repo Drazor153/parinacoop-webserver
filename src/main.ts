@@ -8,6 +8,7 @@ import {
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from '@fastify/helmet';
 
+import metadata from './metadata';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -22,11 +23,15 @@ async function bootstrap() {
   await app.register(helmet);
 
   const config = new DocumentBuilder()
-    .setTitle('Parinacoop WebServer')
-    .setDescription('Parinacoop REST API server')
+    .setTitle('API Rest de Parinacoop')
+    .setDescription(
+      'Servidor API REST para la aplicación desarrollada en Angular para el sistema de contratación de productos en línea de la cooperativa Parinacoop.',
+    )
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
+  await SwaggerModule.loadPluginMetadata(metadata);
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, documentFactory);
 
