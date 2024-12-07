@@ -1,4 +1,4 @@
-import { IsEnum, IsIP, IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsEnum, IsNumber, IsString, IsUrl, Max, Min } from 'class-validator';
 
 export enum Environment {
   Development = 'development',
@@ -10,7 +10,7 @@ export class EnvironmentVariables {
   @IsEnum(Environment)
   NODE_ENV!: Environment;
 
-  @IsIP(4)
+  @IsUrl()
   DB_HOST!: string;
 
   @IsNumber()
