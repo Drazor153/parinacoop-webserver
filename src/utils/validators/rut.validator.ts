@@ -1,11 +1,7 @@
 import { validateRut } from '@fdograph/rut-utilities';
-import {
-  registerDecorator,
-  ValidationArguments,
-  ValidationOptions,
-} from 'class-validator';
+import { registerDecorator } from 'class-validator';
 
-export const IsValidRun = (_validationOptions?: ValidationOptions) => {
+export const IsValidRun = () => {
   return (object: object, propertyName: string) => {
     registerDecorator({
       name: 'isValidRun ',
@@ -15,7 +11,7 @@ export const IsValidRun = (_validationOptions?: ValidationOptions) => {
         message: 'El run dado no es válido',
       },
       validator: {
-        validate: (value: string, args: ValidationArguments) => {
+        validate: (value: string) => {
           return validateRut(value);
         },
       },

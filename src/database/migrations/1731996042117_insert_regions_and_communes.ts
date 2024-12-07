@@ -1,4 +1,4 @@
-import { Kysely, Migration, sql } from 'kysely';
+import { Migration } from 'kysely';
 import { Database } from '../database';
 import { regions_communes } from '../seed/regions';
 

@@ -1,5 +1,5 @@
 import { CreateClientUseCase } from '@/contexts/admin/application/create-client-use-case/create-client.use-case';
-import { TPrimitiveUser, User } from '@/contexts/admin/domain/models/User';
+import { TPrimitiveUser } from '@/contexts/admin/domain/models/User';
 import { Roles } from '@/contexts/shared/decorators/roles.decorator';
 import { Role } from '@/contexts/shared/enums/roles.enum';
 import { AuthGuard } from '@/contexts/shared/guards/auth.guard';

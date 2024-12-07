@@ -20,4 +20,6 @@ export const up: Migration['up'] = async (db) => {
     .execute();
 };
 
-export const down: Migration['down'] = async (db) => {};
+export const down: Migration['down'] = async (db) => {
+  await db.schema.dropTable('password_reset').execute();
+};

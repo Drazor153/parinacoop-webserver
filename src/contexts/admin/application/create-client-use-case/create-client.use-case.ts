@@ -2,7 +2,7 @@ import { Injectable } from '@/contexts/shared/dependency-injection/injectable';
 import { UserRepository } from '../../domain/ports/user.repository';
 import { CreateClientDto } from './create-client.dto';
 import { deconstructRut } from '@fdograph/rut-utilities';
-import { PrimitiveUser, TPrimitiveUser, User } from '../../domain/models/User';
+import { TPrimitiveUser, User } from '../../domain/models/User';
 import { Role } from '@/contexts/shared/enums/roles.enum';
 import { Address } from '../../domain/models/Address';
 import { Profile } from '../../domain/models/Profile';

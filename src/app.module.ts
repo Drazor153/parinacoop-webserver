@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from './config/environment-variables.schema';
 import { DatabaseModule } from './database/database.module';
-import { CommonModule } from './common/common.module';
 import { AuthModule } from './contexts/auth/infrastructure/auth.module';
 import { LocationModule } from './contexts/location/infrastructure/location.module';
 import { HealthModule } from './health/health.module';

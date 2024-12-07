@@ -5,9 +5,6 @@ import {
 } from './database.module-definition';
 import { Database } from './database';
 import { DatabaseOptions } from './databaseOptions';
-import { MysqlDialect, PostgresDialect } from 'kysely';
-import { Pool } from 'pg';
-import { createPool } from 'mysql2';
 import { dialectGenerator } from './dialect-generator';
 
 @Global()
