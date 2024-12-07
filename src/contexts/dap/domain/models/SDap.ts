@@ -37,16 +37,16 @@ export class SDap {
       interestRateBase,
       type,
     } = data;
-
-    const periods = days / 360;
-    const interestRateInPeriod = interestRateBase * periods;
-    const profit = Math.round(initialAmount * interestRateInPeriod);
+    const periods = days / 30;
+    const interestCalculated =
+      (interestRateBase / (days > 365 ? 365 : 30)) * days;
+    const profit = Math.round(initialAmount * (interestCalculated / 100));
 
     return new SDap({
       days,
       dueDate: new Date(initialDate + days * 24 * 60 * 60 * 1000),
-      interestRateInMonth: interestRateBase / 12,
-      interestRateInPeriod,
+      interestRateInMonth: interestRateBase / 100 / periods,
+      interestRateInPeriod: interestRateBase / 100,
       profit,
       initialAmount,
       finalAmount: initialAmount + profit,

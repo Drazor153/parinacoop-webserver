@@ -3,17 +3,23 @@ import { DapRepository } from '../../domain/ports/dap.repository';
 import { Dap, PrimitiveDap } from '../../domain/models/Dap';
 import { CreateDapDto } from './create-dap.dto';
 import { SDap } from '../../domain/models/SDap';
+import { ParameterRepository } from '../../domain/ports/parameter.repository';
 
 @Injectable()
 export class CreateDapUseCase {
-  constructor(private dapRepository: DapRepository) {}
+  constructor(
+    private dapRepository: DapRepository,
+    private parameterRepository: ParameterRepository,
+  ) {}
 
   async execute(dto: CreateDapDto): Promise<{ dap: PrimitiveDap }> {
+    const parameter = await this.parameterRepository.getByDays(dto.days);
+
     const simulatedDap = SDap.create({
       days: dto.days,
       initialAmount: dto.initialAmount,
       initialDate: Date.now(),
-      interestRateBase: 3.94 / 100,
+      interestRateBase: parameter.interestRateBase,
       currencyType: dto.currencyType,
       type: dto.type,
     });

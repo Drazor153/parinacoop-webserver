@@ -15,6 +15,8 @@ import {
 } from './http';
 
 import { PostgreSqlDapRepository } from './repositories/postgresql.dap-repository';
+import { ParameterRepository } from '../domain/ports/parameter.repository';
+import { MySqlParameterRepository } from './repositories/mysql.parameter-repository';
 
 @Module({
   controllers: [GetDapsController, CreateDapController, SimulateDapController],
@@ -25,6 +27,10 @@ import { PostgreSqlDapRepository } from './repositories/postgresql.dap-repositor
     {
       provide: DapRepository,
       useClass: PostgreSqlDapRepository,
+    },
+    {
+      provide: ParameterRepository,
+      useClass: MySqlParameterRepository,
     },
   ],
 })

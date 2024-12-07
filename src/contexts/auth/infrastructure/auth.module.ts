@@ -6,6 +6,7 @@ import { PostgresUserRepository } from './repositories/postgres.user-repository'
 import { JwtModule } from '@nestjs/jwt';
 import { EnvironmentVariables } from '@/config/environment-variables.schema';
 import { ConfigService } from '@nestjs/config';
+import { ValidateJwtController } from './http/validate-jwt/validate-jwt.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ConfigService } from '@nestjs/config';
       }),
     }),
   ],
-  controllers: [LoginController],
+  controllers: [LoginController, ValidateJwtController],
   providers: [
     LoginUseCase,
     {
