@@ -16,7 +16,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  app.enableCors({ origin: ['http://localhost:4200'] });
+  app.enableCors({ origin: ['http://localhost:4200', 'https://parinacoop-webapp.vercel.app/', 'https://cooperativa.fjsolutions.online'] });
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
 
